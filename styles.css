@@ -308,7 +308,7 @@ footer p { font-size: 12px; }
   .marquee-track { flex-wrap: wrap; row-gap: 12px; padding: 0; }
   .marquee-track[aria-hidden="true"] { display: none; }
 }
-.marquee-track img { display: block; width: 96px; height: 30px; object-fit: contain; filter: var(--logo-filter); opacity: .6; transition: opacity .25s; }
+.marquee-track img { display: block; width: 112px; height: 35px; object-fit: contain; filter: var(--logo-filter); opacity: .6; transition: opacity .25s; }
 .marquee-track li:hover img { opacity: .9; }
 :root { --logo-filter: grayscale(1) brightness(0); }
 :root[data-theme="dark"] { --logo-filter: grayscale(1) brightness(0) invert(1); }
@@ -318,4 +318,4 @@ footer p { font-size: 12px; }
 .marquee:focus-within .marquee-track { animation-play-state: paused; }
 /* Optical balancing: Truckstop's strokes are thin, Tellus is dense */
 .marquee-track .logo-truckstop { opacity: .85; }
-.marquee-track .logo-tellus { width: 86px; }
+.marquee-track .logo-tellus { width: 100px; }
