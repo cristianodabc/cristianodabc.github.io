@@ -14,6 +14,20 @@
   applyTheme(root.dataset.theme || 'auto');
   themeBtns.forEach((b) => b.addEventListener('click', () => applyTheme(b.dataset.themeSet)));
 
+  /* Mobile menu */
+  const navBar = document.querySelector('.nav');
+  const burger = navBar.querySelector('.burger');
+  const setMenu = (open) => {
+    navBar.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+  burger.addEventListener('click', () => setMenu(!navBar.classList.contains('open')));
+  navBar.querySelectorAll('#menu a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && navBar.classList.contains('open')) { setMenu(false); burger.focus(); } });
+  document.addEventListener('click', (e) => { if (navBar.classList.contains('open') && !navBar.contains(e.target)) setMenu(false); });
+  window.matchMedia('(max-width: 720px)').addEventListener('change', (e) => { if (!e.matches) setMenu(false); });
+
   /* Technologies state */
   const state = { step: 0, crashed: -1, lastCrash: '', eIdx: 0, traffic: 'Low', trace: -1, approved: false, sel: null, gFail: false, eco: 0 };
   const timers = {};
