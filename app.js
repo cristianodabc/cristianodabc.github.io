@@ -20,7 +20,10 @@
   const set = (patch) => { Object.assign(state, patch); render(); };
 
   const codeBlock = (lang, code) => `<div class="code"><p class="mono">${esc(lang)}</p><pre class="mono"><code>${esc(code)}</code></pre></div>`;
-  const arrow = (cls, col) => `<div class="arrow ${cls || ''}"${col ? ` style="grid-column:${col}"` : ''}><span></span><span></span></div>`;
+  const arrow = (cls, place) => `<div class="arrow ${cls || ''}"${place ? ` style="${place}"` : ''}><span></span><span></span></div>`;
+  // Flow diagrams run left to right on wide screens and top to bottom on phones.
+  const narrow = window.matchMedia('(max-width: 640px)');
+  narrow.addEventListener('change', () => render());
 
   function renderSteps() {
     return D.steps.map((d, i) => `
@@ -62,15 +65,17 @@
     const hotEdges = fail ? ({ gcp: ['lb-svc'], eventsourcing: ['store-proj', 'proj-read'] }[key] || []) : [];
     const hotText = { lb: 'unhealthy instance found', svc: 'replacing instance', store: 'streaming every event', proj: 'rebuilding', read: 'rebuilt from events' };
     const items = [];
+    const vert = narrow.matches;
+    const at = (span) => vert ? `grid-row:${span};grid-column:1` : `grid-column:${span};grid-row:1`;
 
-    (dg.zones || []).forEach((z) => items.push(`<div class="zone" style="grid-column:${z.c}"><span class="zone-label">${esc(z.label)}</span></div>`));
+    (dg.zones || []).forEach((z) => items.push(`<div class="zone" style="${at(z.c)}"><span class="zone-label">${esc(z.label)}</span></div>`));
     dg.nodes.slice(0, -1).forEach((n, k) => {
       const next = dg.nodes[k + 1];
       const pi = path.indexOf(n.id), pj = path.indexOf(next.id);
       const onPath = pi >= 0 && pj === pi + 1;
       const flowing = (onPath && trace === pj && !waiting) || hotEdges.includes(n.id + '-' + next.id);
       const done = onPath && trace >= pj && !flowing;
-      items.push(arrow(flowing ? 'flow' : done ? 'done' : '', String(n.c + 1)));
+      items.push(arrow((flowing ? 'flow' : done ? 'done' : '') + (vert ? ' v' : ''), at(String(n.c + 1))));
     });
     dg.nodes.forEach((n) => {
       const i = path.indexOf(n.id);
@@ -82,7 +87,7 @@
       const cls = ['node', filled && 'filled', (current || hot) ? 'ring' : sel === n.id && 'sel', current && !waiting && 'pulse'].filter(Boolean).join(' ');
       let bars = '';
       if (n.bars) { for (let q = 0; q < n.bars; q++) bars += `<span${fail && q === 0 ? ' class="off"' : ''}></span>`; }
-      items.push(`<button type="button" class="${cls}" data-act="node" data-v="${n.id}" aria-pressed="${sel === n.id}" style="grid-column:${n.c}">
+      items.push(`<button type="button" class="${cls}" data-act="node" data-v="${n.id}" aria-pressed="${sel === n.id}" style="${at(String(n.c))}">
         <b>${esc(n.name)}</b><span class="sub">${esc(sub)}</span>
         ${status ? `<span class="status">${esc(status)}</span>` : ''}
         ${n.chips ? `<span class="chips">${n.chips.map((c) => `<span>${esc(c)}</span>`).join('')}</span>` : ''}
@@ -101,7 +106,8 @@
       extra = `<button type="button" class="ctl" data-act="fail">Replay events</button>`;
     }
     const cd = D.code[key + ':' + sel];
-    return `<div class="scroll-x"><div class="flow-grid" style="grid-template-columns:${dg.nodes.map(() => 'minmax(0, 1fr)').join(' 28px ')}">${items.join('')}</div></div>
+    const tracks = dg.nodes.map(() => vert ? 'auto' : 'minmax(0, 1fr)').join(vert ? ' 34px ' : ' 28px ');
+    return `<div class="scroll-x"><div class="flow-grid${vert ? ' vert' : ''}" style="grid-template-${vert ? 'rows' : 'columns'}:${tracks}">${items.join('')}</div></div>
       <div class="controls"><button type="button" class="run" data-act="trace"${running ? ' disabled' : ''}>${label}</button>${extra}</div>
       <div class="detail"><p class="mono">${esc(byId[sel].name)}</p><p>${esc(byId[sel].desc)}</p>${cd ? codeBlock(cd[0], cd[1]) : ''}</div>`;
   }
