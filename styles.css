@@ -308,3 +308,13 @@ footer p { font-size: 12px; }
   .marquee-track { flex-wrap: wrap; row-gap: 12px; padding: 0; }
   .marquee-track[aria-hidden="true"] { display: none; }
 }
+.marquee-track img { display: block; width: auto; height: 26px; filter: var(--logo-filter); opacity: .6; transition: opacity .25s; }
+.marquee-track li:hover img { opacity: .9; }
+.marquee-track .logo-denim { height: 40px; }
+.marquee-track .logo-tellus { height: 24px; }
+:root { --logo-filter: grayscale(1) brightness(0); }
+:root[data-theme="dark"] { --logo-filter: grayscale(1) brightness(0) invert(1); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --logo-filter: grayscale(1) brightness(0) invert(1); } }
+.marquee-track a { display: block; padding: 4px 0; border-radius: 3px; }
+.marquee-track a:hover img, .marquee-track a:focus-visible img { opacity: .95; }
+.marquee:focus-within .marquee-track { animation-play-state: paused; }
