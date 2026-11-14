@@ -333,3 +333,4 @@ footer p { font-size: 12px; }
 .marquee-track .logo-legends { --logo-filter: grayscale(1) contrast(1.4); }
 :root[data-theme="dark"] .marquee-track .logo-legends { --logo-filter: grayscale(1) invert(1) contrast(1.2); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .marquee-track .logo-legends { --logo-filter: grayscale(1) invert(1) contrast(1.2); } }
+.marquee-track .logo-nutripad { width: 98px; }
