@@ -322,3 +322,14 @@ footer p { font-size: 12px; }
 .marquee-track .logo-static { display: block; padding: 4px 0; }
 .marquee-track .logo-splitpass { width: 32px; height: 32px; }
 .marquee-track .logo-itsfound { width: 104px; }
+.marquee-track .logo-starfish { width: 34px; height: 33px; }
+/* Company name on hover/focus */
+.clients-label { margin-bottom: 0; }
+.marquee { padding-top: 30px; }
+.marquee-track li { position: relative; }
+.marquee-track li::after { content: attr(data-name); position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translate(-50%, 4px); padding: 3px 8px; border-radius: 3px; background: var(--btn-bg); color: var(--btn-fg); font-family: var(--mono); font-size: 11px; font-weight: 400; letter-spacing: 0; line-height: 1.4; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+.marquee-track li:hover::after, .marquee-track li:focus-within::after { opacity: 1; transform: translate(-50%, 0); }
+.marquee { padding-bottom: 6px; }
+.marquee-track .logo-legends { --logo-filter: grayscale(1) contrast(1.4); }
+:root[data-theme="dark"] .marquee-track .logo-legends { --logo-filter: grayscale(1) invert(1) contrast(1.2); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .marquee-track .logo-legends { --logo-filter: grayscale(1) invert(1) contrast(1.2); } }
