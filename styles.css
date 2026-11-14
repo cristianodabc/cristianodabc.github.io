@@ -319,3 +319,6 @@ footer p { font-size: 12px; }
 /* Optical balancing: Truckstop's strokes are thin, Tellus is dense */
 .marquee-track .logo-truckstop { opacity: .85; }
 .marquee-track .logo-tellus { width: 100px; }
+.marquee-track .logo-static { display: block; padding: 4px 0; }
+.marquee-track .logo-splitpass { width: 32px; height: 32px; }
+.marquee-track .logo-itsfound { width: 104px; }
