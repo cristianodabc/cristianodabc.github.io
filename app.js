@@ -210,18 +210,51 @@
       nowText = String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0') + ' BRT';
     } catch (e) {}
     const work = (off, h) => { const l = (((h + (off - me)) % 24) + 24) % 24; return l >= 9 && l < 18; };
-    const zones = [['Ponta Grossa', me, true], ['New York', tzOffset('America/New_York', -5)], ['London', tzOffset('Europe/London', 0)], ['Berlin', tzOffset('Europe/Berlin', 1)]];
-    $('tz-rows').innerHTML = zones.map(([name, off, mine]) => {
-      let cells = '';
+    const zones = [['pg', 'Ponta Grossa', me, 'America/Sao_Paulo', true], ['ny', 'New York', tzOffset('America/New_York', -5), 'America/New_York'], ['ld', 'London', tzOffset('Europe/London', 0), 'Europe/London'], ['bl', 'Berlin', tzOffset('Europe/Berlin', 1), 'Europe/Berlin']];
+    cityInfo = {};
+    $('tz-rows').innerHTML = zones.map(([key, name, off, zone, mine]) => {
+      let cells = '', overlap = 0;
       for (let h = 0; h < 24; h++) {
         const on = work(off, h);
+        if (on && work(me, h)) overlap++;
         const cls = mine ? (on ? 'on' : '') : on ? (work(me, h) ? 'on' : 'theirs') : '';
         cells += `<i${cls ? ` class="${cls}"` : ''}></i>`;
       }
-      return `<div class="tz-row${mine ? ' me' : ''}"><span class="mono">${name}</span><span class="tz-cells">${cells}</span></div>`;
+      cityInfo[key] = { name, zone, overlap, mine };
+      return `<div class="tz-row${mine ? ' me' : ''}${key === hot ? ' hot' : ''}" data-city="${key}"><span class="mono">${name}</span><span class="tz-cells">${cells}</span></div>`;
     }).join('');
     $('tz-now').style.left = (nowH / 24 * 100).toFixed(2) + '%';
     $('tz-now-text').textContent = 'now ' + nowText;
+    showCity(hot);
+  }
+
+  /* Map: a city's pin, arc and availability row light up together */
+  let cityInfo = {}, hot = null;
+  function localTime(zone) {
+    try { return new Intl.DateTimeFormat('en-GB', { timeZone: zone, hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date()); } catch (e) { return ''; }
+  }
+  function showCity(key) {
+    const note = $('map-note');
+    if (!note) return;
+    hot = key;
+    document.querySelectorAll('#map [data-city], #tz-rows [data-city]').forEach((el) => el.classList.toggle('hot', el.dataset.city === key));
+    $('tz-rows').classList.toggle('focus', !!key && key !== 'pg');
+    const c = key && cityInfo[key];
+    if (!c) { note.textContent = 'Hover or tab to a city to compare hours.'; return; }
+    note.textContent = c.mine
+      ? `${c.name} · ${localTime(c.zone)} local · working 09–18`
+      : `${c.name} · ${localTime(c.zone)} local · ${c.overlap} h overlap with my 09–18`;
+  }
+  const mapEl = $('map');
+  if (mapEl) {
+    const pick = (e) => { const el = e.target.closest('[data-city]'); if (el) showCity(el.dataset.city); };
+    mapEl.addEventListener('mouseover', pick);
+    mapEl.addEventListener('focusin', pick);
+    mapEl.addEventListener('click', pick);
+    mapEl.addEventListener('mouseleave', () => showCity(null));
+    mapEl.addEventListener('focusout', (e) => { if (!mapEl.contains(e.relatedTarget)) showCity(null); });
+    $('tz-rows').addEventListener('mouseover', pick);
+    $('tz-rows').addEventListener('mouseleave', () => showCity(null));
   }
 
   render();
