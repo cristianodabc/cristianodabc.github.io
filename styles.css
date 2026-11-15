@@ -433,3 +433,7 @@ footer p { font-size: 12px; }
 .compose-send:focus-visible, .compose-copy:focus-visible { outline: 2px solid var(--band-green); outline-offset: 2px; }
 .compose-status { flex: 1 1 200px; font-size: 11px; color: var(--band-muted); }
 .compose-status.err { color: #e06c75; }
+.step > .mono:first-child { color: var(--green); opacity: 1; }
+.aiflow-node:not(.active) .node-head > .mono { color: var(--green); }
+.aistep:not(.active) .num { color: var(--green); }
+.aistep:not(.active) .num .who { color: var(--accent); }
