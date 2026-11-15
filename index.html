@@ -162,7 +162,15 @@
       <div class="contact-head">
         <p class="eyebrow mono"><span class="g">//</span> 05 contact</p>
         <h2>Let’s build what’s next.</h2>
-        <p class="intro">Describe the project and get a clear next step in reply.</p>
+        <p class="intro">Describe the project and get a clear next step in reply, within one business day.</p>
+      </div>
+      <div class="contact-steps">
+        <ol class="steps-next" aria-label="What happens next">
+          <li><span class="n mono">01</span><span><b>Reply</b><span class="d">Questions, or a clear next step.</span></span></li>
+          <li><span class="n mono">02</span><span><b>Call</b><span class="d">A short call to agree on scope.</span></span></li>
+          <li><span class="n mono">03</span><span><b>Proposal</b><span class="d">Written scope, timeline and price.</span></span></li>
+        </ol>
+        <p class="nda mono"><span class="g">~</span> Happy to sign an NDA before you share details.</p>
       </div>
       <figure class="map"><div class="map-frame"><iframe title="Map of Ponta Grossa, Paraná, Brazil" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12638792.947063658!2d-51.7217292368261!3d-22.009619498368416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94e81ac65f102321%3A0xacb0f4e64629b2f1!2sPonta%20Grossa%2C%20Paran%C3%A1!5e0!3m2!1sen!2sbr!4v1794741726888!5m2!1sen!2sbr" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><figcaption class="map-note mono"><span class="g">~</span> This is where I live: Ponta Grossa, in southern Brazil.</figcaption></figure>
       <form class="compose" id="compose" novalidate aria-label="Write an email">
@@ -170,6 +178,12 @@
         <div class="compose-row"><span class="compose-label mono">To</span><a class="compose-to" href="mailto:pegasustec.dev@pm.me">pegasustec.dev@pm.me</a></div>
         <div class="compose-row"><label class="compose-label mono" for="c-subject">Subject</label><input id="c-subject" name="subject" type="text" value="Project inquiry" maxlength="120" autocomplete="off"></div>
         <div class="compose-row"><label class="compose-label mono" for="c-name">Name</label><input id="c-name" name="name" type="text" placeholder="Optional" maxlength="80" autocomplete="name"></div>
+        <div class="compose-row compose-topic" role="group" aria-labelledby="c-topic-label"><span class="compose-label mono" id="c-topic-label">Topic</span><div class="chips">
+          <button type="button" class="chip mono" aria-pressed="false" data-topic="Software development">Software development</button>
+          <button type="button" class="chip mono" aria-pressed="false" data-topic="Financial &amp; event-driven systems">Financial &amp; event-driven</button>
+          <button type="button" class="chip mono" aria-pressed="false" data-topic="Cloud &amp; infrastructure">Cloud &amp; infrastructure</button>
+          <button type="button" class="chip mono" aria-pressed="false" data-topic="Something else">Something else</button>
+        </div></div>
         <label class="sr-only" for="c-body">Message</label>
         <textarea id="c-body" name="body" rows="6" maxlength="1500" placeholder="What are you building? Add the stack, the timeline and anything else that helps."></textarea>
         <div class="compose-foot">

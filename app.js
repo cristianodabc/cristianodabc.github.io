@@ -431,10 +431,21 @@
   const TO = 'pegasustec.dev@pm.me', MAX_URL = 1900;
   const subject = document.getElementById('c-subject'), name = document.getElementById('c-name');
   const body = document.getElementById('c-body'), status = document.getElementById('c-status');
+  const DEFAULT_SUBJECT = 'Project inquiry';
+  let topic = '', autoSubject = subject.value;
+  const chips = Array.from(form.querySelectorAll('.chip'));
+  chips.forEach((chip) => chip.addEventListener('click', () => {
+    const on = chip.getAttribute('aria-pressed') !== 'true';
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip && on)));
+    topic = on ? chip.dataset.topic : '';
+    const next = topic ? DEFAULT_SUBJECT + ': ' + topic : DEFAULT_SUBJECT;
+    if (!subject.value.trim() || subject.value === autoSubject) subject.value = next;
+    autoSubject = next;
+  }));
   const text = () => {
     const msg = body.value.trim();
     const who = name.value.trim();
-    return msg + (who ? '\n\n' + who : '');
+    return (topic ? 'Looking for: ' + topic + '\n\n' : '') + msg + (who ? '\n\n' + who : '');
   };
   const say = (t, err) => { status.textContent = t; status.classList.toggle('err', !!err); };
   const url = () => 'mailto:' + TO + '?subject=' + encodeURIComponent(subject.value.trim() || 'Project inquiry') + '&body=' + encodeURIComponent(text().replace(/\r?\n/g, '\r\n'));
