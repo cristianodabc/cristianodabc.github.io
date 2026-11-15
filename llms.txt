@@ -1,0 +1,23 @@
+# Pegasustec
+
+> Independent software and infrastructure engineering, built on Elixir. Simple, reliable, and made to scale.
+
+Pegasustec is the independent, B2B consultancy of Cristiano Carvalho, based in Ponta Grossa, Paraná, Brazil (UTC−03:00). He has 9+ years in backend engineering and 8+ years building Elixir/OTP systems, including freight payments of $2B+ on event-sourced systems. Elixir is the main stack; Ruby and Python are also taken on. Work in stacks he cannot review well is declined, because AI-written code is only as good as the person checking it.
+
+## Services
+
+- [Software development](https://pegasustec.dev/#services): web applications and backend systems in Elixir, interfaces in Phoenix LiveView, architecture reviews and audits of existing codebases.
+- [Financial & event-driven systems](https://pegasustec.dev/#services): payment flows, ledgers and workflows modeled as events, so every change is auditable and can be replayed (event sourcing, CQRS, payments).
+- [Cloud & infrastructure](https://pegasustec.dev/#services): secure, observable and cost-aware infrastructure (Terraform, Docker, Google Cloud).
+
+## How the work is done
+
+- [Approach](https://pegasustec.dev/#approach): simple, reliable, transparent, built to last, and asynchronous by default across time zones, with overlap hours for live calls.
+- [How AI is used](https://pegasustec.dev/#ai): agents write much of the code and the human owns every line that ships. Plan, build, verify, human review, automated gate, ship, learn.
+
+## Contact
+
+- Email: carvalho.cristiano@proton.me
+- [GitHub](https://github.com/cristianodabc)
+- [LinkedIn](https://www.linkedin.com/in/ccarvalho-dev/)
+- [Resume (PDF)](https://pegasustec.dev/assets/cristiano-carvalho-resume.pdf)

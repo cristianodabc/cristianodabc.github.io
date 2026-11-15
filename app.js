@@ -245,3 +245,45 @@
     if (el) select(el.dataset.step);
   });
 })();
+
+/* Terminal easter egg: a fixed command table, never evaluated */
+(function () {
+  const dlg = document.getElementById('iex');
+  if (!dlg || typeof dlg.showModal !== 'function') return;
+  const out = document.getElementById('iex-out'), input = document.getElementById('iex-in');
+  const prompt = document.getElementById('iex-prompt'), form = document.getElementById('iex-form');
+  const COMMANDS = {
+    help: ['whoami   who runs this', 'services line of work', 'stack    main tools', 'approach how the work is done', 'ai       how AI is used', 'contact  how to reach me', 'clear    clear the screen', 'exit     close'],
+    whoami: ['{:ok, "Cristiano Carvalho"}', 'Independent software engineer, Ponta Grossa, Brazil (UTC-03:00).', '9+ years in backend engineering, 8+ in Elixir/OTP.'],
+    services: ['1. Software development', '2. Financial & event-driven systems', '3. Cloud & infrastructure'],
+    stack: ['[:elixir, :phoenix_liveview, :postgresql, :docker, :terraform, :google_cloud]', 'Ruby and Python too, but only where I can review the code well.'],
+    approach: ['[:simple, :reliable, :transparent, :built_to_last, :async_by_default]'],
+    ai: ['AI writes much of the code. I own every line that ships.', 'plan -> build -> verify -> my review -> gate -> ship -> learn'],
+    contact: ['carvalho.cristiano@proton.me', 'github.com/cristianodabc', 'linkedin.com/in/ccarvalho-dev']
+  };
+  let n = 1;
+  const add = (text, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = text; out.appendChild(d); };
+  const setPrompt = () => { prompt.textContent = 'iex(' + n + ')>'; };
+  const banner = () => { out.textContent = ''; add('Pegasustec. Type help for commands.', 'dim'); };
+  const run = (raw) => {
+    const cmd = raw.trim().replace(/\(\)$/, '').toLowerCase();
+    add('iex(' + n + ')> ' + raw, 'cmd');
+    n++; setPrompt();
+    if (!cmd) return;
+    if (cmd === 'clear') { banner(); return; }
+    if (cmd === 'exit' || cmd === 'quit') { dlg.close(); return; }
+    const res = COMMANDS[cmd];
+    if (res) res.forEach((l) => add(l)); else add('** (UndefinedFunctionError) function Pegasustec.' + cmd.slice(0, 40) + '/0 is undefined. Try help.', 'err');
+    out.scrollTop = out.scrollHeight;
+  };
+  const open = () => { if (dlg.open) return; if (!out.childNodes.length) banner(); setPrompt(); dlg.showModal(); input.focus(); };
+  form.addEventListener('submit', (e) => { e.preventDefault(); run(input.value); input.value = ''; });
+  document.getElementById('iex-open').addEventListener('click', open);
+  document.getElementById('iex-close').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== '`' || e.metaKey || e.ctrlKey || e.altKey) return;
+    const t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    e.preventDefault(); open();
+  });
+})();
