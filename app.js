@@ -6,13 +6,15 @@
   /* Theme */
   const root = document.documentElement;
   const themeBtns = document.querySelectorAll('[data-theme-set]');
-  const applyTheme = (mode) => {
+  const applyTheme = (mode, save) => {
     if (mode === 'light' || mode === 'dark') root.dataset.theme = mode; else delete root.dataset.theme;
     themeBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.themeSet === mode)));
-    try { mode === 'auto' ? localStorage.removeItem('theme') : localStorage.setItem('theme', mode); } catch (e) {}
+    if (save) { try { localStorage.setItem('theme', mode); } catch (e) {} }
   };
-  applyTheme(root.dataset.theme || 'auto');
-  themeBtns.forEach((b) => b.addEventListener('click', () => applyTheme(b.dataset.themeSet)));
+  let stored = null;
+  try { stored = localStorage.getItem('theme'); } catch (e) {}
+  applyTheme(stored === 'auto' ? 'auto' : root.dataset.theme || 'dark', false);
+  themeBtns.forEach((b) => b.addEventListener('click', () => applyTheme(b.dataset.themeSet, true)));
 
   /* Mobile menu */
   const navBar = document.querySelector('.nav');
