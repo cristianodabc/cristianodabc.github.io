@@ -450,6 +450,16 @@ footer p { font-size: 12px; }
 .chip:focus-visible { outline: 2px solid var(--band-on); outline-offset: 2px; }
 .iex-banner { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px 28px; margin-bottom: 8px; white-space: normal; }
 .iex-logo { margin: 0; font: inherit; font-size: 11px; line-height: 12px; letter-spacing: 0; color: var(--term-cmd); white-space: pre; }
-.iex-info { flex: 1 1 200px; min-width: 0; padding-top: 6px; }
-.iex-info .iex-title { font-weight: 700; color: var(--term-cmd); margin-bottom: 4px; }
-.iex-info .dim { color: var(--term-dim); white-space: pre; }
+.iex-info { flex: 1 1 220px; min-width: 0; padding-top: 4px; }
+.iex-title { font-weight: 700; color: var(--term-cmd); }
+.iex-rule { color: var(--term-dim); margin-bottom: 4px; }
+.iex-row { display: grid; grid-template-columns: 10ch minmax(0, 1fr); gap: 0 1ch; }
+.iex-key { font-weight: 700; color: var(--term-cmd); }
+.iex-palette { display: flex; gap: 0; margin-top: 10px; }
+.iex-palette i { display: block; width: 26px; height: 14px; }
+.iex-palette i:nth-child(1) { background: var(--term-line); }
+.iex-palette i:nth-child(2) { background: var(--term-dim); }
+.iex-palette i:nth-child(3) { background: var(--term-ink); }
+.iex-palette i:nth-child(4) { background: var(--term-cmd); }
+.iex-palette i:nth-child(5) { background: var(--term-err); }
+.iex-hint { margin-top: 10px; font-size: 11px; color: var(--term-dim); }
