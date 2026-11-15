@@ -356,6 +356,7 @@
   const LOGO = ["       ..                             .-", "      .:%#:                          =@-", "       %@@@%#+-.                  :+@@#", "      +@@@@@@@@@#=             .=#@@@#.", "    .#@@@@@@@@@@@@%-        -+%@@@@@*", "   =@@@@@@@@@@@@@@@@*   :=#@@@@@@@#-", "  *@@@@@@@@@#@@@@@@%#+*%@@@@@@@@*-.", ".%@@@@#+++=.*@@@%+*#@@@@@@@@@#=-+#@.", ":#%%%-     -@@#+*@@@@@@@@%*==*%@@@+", "          =@@+#@@@@@@@#++*%@@@@@@+", "        .*@%=%@@@@@#**%@@@@@@@@*.", "       .%@@=@@@@@@#%@@@@@@@%+-::", "       #@@%%@@@@@@@@@@@#+++*#@@-", "      .@@@@@@@@@@@@@#**#@@@@@*:", "       @@@@@@@@@@@@%@@@@@#+-", "       +@@@@@@@@@@@@@#+++*%#", "        *@@@@@@@@@@%#%@@@%=", "         +@@@@@@@@@@@%#+:", "          -%@@@@@@@=.", "           +@@@@@@%", "          +********+.", "       -#%%%%%%%%%%%%%#:", "       :+*************+.", "       +%%%%%%%%%%%%%%%=", "      #@@@@@@@@@@@@@@@@@*", "     +@@@@@@@@@@@@@@@@@@@-"];
   const INFO = ['pegasustec.dev', 'Independent software and infrastructure engineering, built on Elixir.', '', 'help   list commands', 'keys   vim keys for the page'];
   const FORTUNES = ['Anything not needed is removed. Fewer moving parts means fewer things that can break.', 'Tested, monitored and documented, so your systems keep working when it matters.', 'Clear scope, honest timelines and regular updates from first call to launch.', 'Foundations designed to grow with your business instead of being rebuilt every year.', 'AI writes much of the code. I own every line that ships.', 'Time zones matter mostly for meetings. The work can be done from anywhere.'];
+  const NOTE = '~ Before computers, chess taught what good engineering still is: think ahead, make every move count.';
   const hist = [];
   let n = 1, pos = 0;
   const add = (t, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = t; out.appendChild(d); };
@@ -366,6 +367,7 @@
     const pre = document.createElement('pre'); pre.className = 'iex-logo'; pre.setAttribute('aria-hidden', 'true'); pre.textContent = LOGO.join('\n');
     const info = document.createElement('div'); info.className = 'iex-info';
     INFO.forEach((t, i) => { const d = document.createElement('div'); d.textContent = t || ' '; if (i === 0) d.className = 'iex-title'; else if (t.indexOf('   ') > 0) d.className = 'dim'; info.appendChild(d); });
+    const note = document.createElement('div'); note.className = 'iex-note'; note.textContent = NOTE; info.appendChild(note);
     wrap.append(pre, info);
     return wrap;
   };
