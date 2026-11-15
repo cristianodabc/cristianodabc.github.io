@@ -127,11 +127,12 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px s
 
 /* Contact + footer */
 .band { background: var(--band-bg); color: var(--band-ink); }
-.contact .wrap { padding-top: clamp(56px, 7vw, 104px); padding-bottom: clamp(56px, 7vw, 104px); display: flex; flex-wrap: wrap; gap: 56px 80px; align-items: stretch; }
-.contact-side { display: flex; flex-direction: column; }
-.contact-avail { margin-top: auto; }
+.contact .wrap { padding-top: clamp(56px, 7vw, 104px); padding-bottom: clamp(56px, 7vw, 104px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "head info" "map compose" "avail avail"; gap: 56px 80px; align-items: stretch; }
+.contact-head { grid-area: head; }
+.contact-side { grid-area: info; }
+.contact-avail { grid-area: avail; }
 .contact .eyebrow { margin-bottom: 24px; color: var(--band-accent); }
-.contact h2 { font-size: clamp(26px, 3.2vw, 42px); line-height: 1.05; font-weight: 400; letter-spacing: -0.035em; }
+.contact h2 { text-wrap: balance; font-size: clamp(26px, 3.2vw, 42px); line-height: 1.05; font-weight: 400; letter-spacing: -0.035em; }
 .contact .intro { margin-top: 28px; max-width: 460px; color: var(--band-muted); }
 .info { border-top: 1px solid var(--band-ink); }
 .info-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 24px; padding: 18px 0; border-bottom: 1px solid var(--band-line); }
@@ -154,11 +155,11 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px s
 .tz-cells i.theirs { background: color-mix(in srgb, var(--band-accent) 40%, transparent); }
 .tz-now { position: absolute; top: 14px; bottom: -4px; width: 0; border-left: 1px dashed var(--band-ink); pointer-events: none; }
 .tz-note { margin-top: 14px; font-size: 11px; color: var(--band-muted); }
-.map { margin: 40px 0 0; max-width: 460px; }
-.map-frame { position: relative; aspect-ratio: 4 / 3; border: 1px solid var(--band-line); border-radius: 4px; overflow: hidden; }
+.map { grid-area: map; margin: 0; display: flex; flex-direction: column; min-width: 0; }
+.map-frame { position: relative; flex: 1 0 auto; aspect-ratio: 4 / 3; border: 1px solid var(--band-line); border-radius: 6px; overflow: hidden; }
 .map-frame::after { content: ""; position: absolute; inset: 0; background: var(--band-bg); mix-blend-mode: color; pointer-events: none; }
 .map-note { margin-top: 12px; font-size: 11px; color: var(--band-muted); }
-.map iframe { display: block; width: 100%; height: calc(100% + 130px); margin-top: -130px; border: 0; filter: grayscale(1) invert(.86) brightness(.8) contrast(.9); }
+.map iframe { position: absolute; top: -130px; left: 0; width: 100%; height: calc(100% + 130px); border: 0; filter: grayscale(1) invert(.86) brightness(.8) contrast(.9); }
 footer { border-top: 1px solid var(--band-line); }
 footer .wrap { padding-top: 20px; padding-bottom: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 32px; }
 footer .brand .mark { color: var(--band-ink); }
@@ -415,14 +416,14 @@ footer p { font-size: 12px; }
 .keyhint kbd { color: var(--green); }
 .service .num { color: var(--green); }
 .contact .info-row > .mono:first-child, .tz-row.me > span:first-child { color: var(--band-green); }
-.compose { flex: 1 1 100%; margin-top: 8px; background: color-mix(in srgb, var(--band-ink) 5%, var(--band-bg)); border: 1px solid var(--band-line); border-radius: 6px; overflow: hidden; }
+.compose { grid-area: compose; display: flex; flex-direction: column; min-width: 0; background: color-mix(in srgb, var(--band-ink) 5%, var(--band-bg)); border: 1px solid var(--band-line); border-radius: 6px; overflow: hidden; }
 .compose-bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; padding: 10px 16px; font-size: 11px; color: var(--band-muted); border-bottom: 1px solid var(--band-line); }
 .compose-row { display: flex; align-items: center; gap: 12px; padding: 0 16px; min-height: 44px; border-bottom: 1px solid var(--band-line); }
 .compose-label { flex: 0 0 64px; font-size: 11px; color: var(--band-green); }
 .compose-to { color: var(--band-ink); font-size: 14px; }
 .compose input, .compose textarea { font: inherit; color: var(--band-ink); background: transparent; border: 0; outline: 0; }
 .compose input { flex: 1 1 auto; min-width: 0; height: 44px; padding: 0; font-size: 14px; }
-.compose textarea { display: block; width: 100%; box-sizing: border-box; min-height: 180px; padding: 16px; font-size: 15px; line-height: 1.55; resize: vertical; }
+.compose textarea { display: block; flex: 1 1 auto; width: 100%; box-sizing: border-box; min-height: 120px; padding: 16px; font-size: 15px; line-height: 1.55; resize: vertical; }
 .compose input::placeholder, .compose textarea::placeholder { color: var(--band-muted); opacity: .8; }
 .compose input:focus-visible, .compose textarea:focus-visible { outline: 2px solid var(--band-green); outline-offset: -2px; }
 .compose-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--band-line); }
@@ -437,3 +438,6 @@ footer p { font-size: 12px; }
 .aiflow-node:not(.active) .node-head > .mono { color: var(--green); }
 .aistep:not(.active) .num { color: var(--green); }
 .aistep:not(.active) .num .who { color: var(--accent); }
+@media (max-width: 900px) { .contact .wrap { grid-template-columns: 1fr; grid-template-areas: "head" "info" "map" "compose" "avail"; gap: 40px; } .map-frame { min-height: 260px; aspect-ratio: 4 / 3; flex: 0 0 auto; } }
+.compose { transition: border-color .2s; }
+.compose:focus-within { border-color: var(--band-muted); }
