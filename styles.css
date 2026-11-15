@@ -387,7 +387,7 @@ footer p { font-size: 12px; }
 .aiflow-foot .legend { display: inline-flex; align-items: center; gap: 5px; }
 .aiflow-foot .legend .sep { width: 10px; }
 
-.iex { width: min(680px, 92vw); max-height: min(460px, 80vh); padding: 0; border: 1px solid var(--term-border); border-radius: 6px; background: var(--term-bg); color: var(--term-ink); box-shadow: 0 24px 60px var(--term-shadow); }
+.iex { width: min(680px, 92vw); max-height: min(580px, 88vh); padding: 0; border: 1px solid var(--term-border); border-radius: 6px; background: var(--term-bg); color: var(--term-ink); box-shadow: 0 24px 60px var(--term-shadow); }
 .iex[open] { display: flex; flex-direction: column; }
 .iex::backdrop { background: var(--term-back); }
 .iex-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; font-size: 11px; color: var(--term-dim); border-bottom: 1px solid var(--term-line); }
@@ -448,3 +448,8 @@ footer p { font-size: 12px; }
 .chip:hover { color: var(--band-ink); border-color: var(--band-muted); }
 .chip[aria-pressed="true"] { color: var(--band-on); border-color: var(--band-on); }
 .chip:focus-visible { outline: 2px solid var(--band-on); outline-offset: 2px; }
+.iex-banner { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px 28px; margin-bottom: 8px; white-space: normal; }
+.iex-logo { margin: 0; font: inherit; font-size: 11px; line-height: 12px; letter-spacing: 0; color: var(--term-cmd); white-space: pre; }
+.iex-info { flex: 1 1 200px; min-width: 0; padding-top: 6px; }
+.iex-info .iex-title { font-weight: 700; color: var(--term-cmd); margin-bottom: 4px; }
+.iex-info .dim { color: var(--term-dim); white-space: pre; }

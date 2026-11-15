@@ -271,6 +271,7 @@
     return n;
   };
   const COMMANDS = {
+    logo: { d: 'show the logo', run: () => { out.appendChild(logoNode()); out.scrollTop = out.scrollHeight; } },
     help: { d: 'list commands', run: () => Object.keys(COMMANDS).map((k) => k.padEnd(10) + COMMANDS[k].d).concat(['', 'Tab completes, up/down recalls, and Pegasustec.services() or whoami |> upcase work too.']) },
     whoami: { d: 'who runs this', run: () => ['{:ok, "Cristiano Carvalho"}', 'Independent software engineer, Ponta Grossa, Brazil (UTC-03:00).', '9+ years in backend engineering, 8+ in Elixir/OTP.'] },
     services: { d: 'line of work', run: () => ['1. Software development', '2. Financial & event-driven systems', '3. Cloud & infrastructure'] },
@@ -307,11 +308,22 @@
     reverse: (l) => l.slice().reverse(),
     sort: (l) => l.slice().sort()
   };
+  const LOGO = ["       ..                             .-", "      .:%#:                          =@-", "       %@@@%#+-.                  :+@@#", "      +@@@@@@@@@#=             .=#@@@#.", "    .#@@@@@@@@@@@@%-        -+%@@@@@*", "   =@@@@@@@@@@@@@@@@*   :=#@@@@@@@#-", "  *@@@@@@@@@#@@@@@@%#+*%@@@@@@@@*-.", ".%@@@@#+++=.*@@@%+*#@@@@@@@@@#=-+#@.", ":#%%%-     -@@#+*@@@@@@@@%*==*%@@@+", "          =@@+#@@@@@@@#++*%@@@@@@+", "        .*@%=%@@@@@#**%@@@@@@@@*.", "       .%@@=@@@@@@#%@@@@@@@%+-::", "       #@@%%@@@@@@@@@@@#+++*#@@-", "      .@@@@@@@@@@@@@#**#@@@@@*:", "       @@@@@@@@@@@@%@@@@@#+-", "       +@@@@@@@@@@@@@#+++*%#", "        *@@@@@@@@@@%#%@@@%=", "         +@@@@@@@@@@@%#+:", "          -%@@@@@@@=.", "           +@@@@@@%", "          +********+.", "       -#%%%%%%%%%%%%%#:", "       :+*************+.", "       +%%%%%%%%%%%%%%%=", "      #@@@@@@@@@@@@@@@@@*", "     +@@@@@@@@@@@@@@@@@@@-"];
+  const INFO = ['pegasustec.dev', 'Independent software and infrastructure engineering, built on Elixir.', '', 'help   list commands', 'keys   vim keys for the page'];
   const hist = [];
   let n = 1, pos = 0;
   const add = (t, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = t; out.appendChild(d); };
   const setPrompt = () => { prompt.textContent = 'iex(' + n + ')>'; };
   const banner = () => { out.textContent = ''; add('Pegasustec. Type help for commands, or keys for the vim shortcuts.', 'dim'); };
+  const logoNode = () => {
+    const wrap = document.createElement('div'); wrap.className = 'iex-banner';
+    const pre = document.createElement('pre'); pre.className = 'iex-logo'; pre.setAttribute('aria-hidden', 'true'); pre.textContent = LOGO.join('\n');
+    const info = document.createElement('div'); info.className = 'iex-info';
+    INFO.forEach((t, i) => { const d = document.createElement('div'); d.textContent = t || ' '; if (i === 0) d.className = 'iex-title'; else if (t.indexOf('   ') > 0) d.className = 'dim'; info.appendChild(d); });
+    wrap.append(pre, info);
+    return wrap;
+  };
+  const intro = () => { out.textContent = ''; out.appendChild(logoNode()); };
   const parse = (seg) => {
     let s = seg.trim().replace(/^(?:[A-Z]\w*\.)+/, '');
     const m = /^(\w+)\s*\((.*)\)$/.exec(s);
@@ -350,7 +362,7 @@
     parts[parts.length - 1] = common; input.value = parts.join(' ');
     out.scrollTop = out.scrollHeight;
   };
-  const open = () => { if (dlg.open) return; if (!out.childNodes.length) banner(); setPrompt(); dlg.showModal(); input.focus(); };
+  const open = () => { if (dlg.open) return; if (!out.childNodes.length) intro(); setPrompt(); dlg.showModal(); input.focus(); };
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const v = input.value;
