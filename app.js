@@ -309,8 +309,7 @@
     sort: (l) => l.slice().sort()
   };
   const LOGO = ["       ..                             .-", "      .:%#:                          =@-", "       %@@@%#+-.                  :+@@#", "      +@@@@@@@@@#=             .=#@@@#.", "    .#@@@@@@@@@@@@%-        -+%@@@@@*", "   =@@@@@@@@@@@@@@@@*   :=#@@@@@@@#-", "  *@@@@@@@@@#@@@@@@%#+*%@@@@@@@@*-.", ".%@@@@#+++=.*@@@%+*#@@@@@@@@@#=-+#@.", ":#%%%-     -@@#+*@@@@@@@@%*==*%@@@+", "          =@@+#@@@@@@@#++*%@@@@@@+", "        .*@%=%@@@@@#**%@@@@@@@@*.", "       .%@@=@@@@@@#%@@@@@@@%+-::", "       #@@%%@@@@@@@@@@@#+++*#@@-", "      .@@@@@@@@@@@@@#**#@@@@@*:", "       @@@@@@@@@@@@%@@@@@#+-", "       +@@@@@@@@@@@@@#+++*%#", "        *@@@@@@@@@@%#%@@@%=", "         +@@@@@@@@@@@%#+:", "          -%@@@@@@@=.", "           +@@@@@@%", "          +********+.", "       -#%%%%%%%%%%%%%#:", "       :+*************+.", "       +%%%%%%%%%%%%%%%=", "      #@@@@@@@@@@@@@@@@@*", "     +@@@@@@@@@@@@@@@@@@@-"];
-  const HOST = 'cristiano@pegasustec';
-  const INFO = [['Role', 'Independent software engineer'], ['Location', 'Ponta Grossa, Brazil · UTC-03:00'], ['Uptime', '9+ years in backend, 8+ in Elixir'], ['Stack', 'Elixir, LiveView, PostgreSQL'], ['Infra', 'Terraform, Docker, Google Cloud'], ['Focus', 'Financial & event-driven systems'], ['Approach', 'Simple, reliable, transparent'], ['Work', 'Async by default, flexible hours'], ['AI', 'Agents write, I review every line'], ['Contact', 'pegasustec.dev@pm.me']];
+  const INFO = ['pegasustec.dev', 'Independent software and infrastructure engineering, built on Elixir.', '', 'help   list commands', 'keys   vim keys for the page'];
   const hist = [];
   let n = 1, pos = 0;
   const add = (t, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = t; out.appendChild(d); };
@@ -320,18 +319,7 @@
     const wrap = document.createElement('div'); wrap.className = 'iex-banner';
     const pre = document.createElement('pre'); pre.className = 'iex-logo'; pre.setAttribute('aria-hidden', 'true'); pre.textContent = LOGO.join('\n');
     const info = document.createElement('div'); info.className = 'iex-info';
-    const title = document.createElement('div'); title.className = 'iex-title'; title.textContent = HOST; info.appendChild(title);
-    const rule = document.createElement('div'); rule.className = 'iex-rule'; rule.textContent = '-'.repeat(HOST.length); info.appendChild(rule);
-    INFO.forEach(([k, v]) => {
-      const row = document.createElement('div'); row.className = 'iex-row';
-      const key = document.createElement('span'); key.className = 'iex-key'; key.textContent = k;
-      const val = document.createElement('span'); val.textContent = v;
-      row.append(key, val); info.appendChild(row);
-    });
-    const pal = document.createElement('div'); pal.className = 'iex-palette'; pal.setAttribute('aria-hidden', 'true');
-    for (let n = 0; n < 5; n++) pal.appendChild(document.createElement('i'));
-    info.appendChild(pal);
-    const hint = document.createElement('div'); hint.className = 'iex-hint'; hint.textContent = 'type help for commands, keys for vim shortcuts'; info.appendChild(hint);
+    INFO.forEach((t, i) => { const d = document.createElement('div'); d.textContent = t || ' '; if (i === 0) d.className = 'iex-title'; else if (t.indexOf('   ') > 0) d.className = 'dim'; info.appendChild(d); });
     wrap.append(pre, info);
     return wrap;
   };
