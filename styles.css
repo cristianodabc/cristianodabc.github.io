@@ -127,21 +127,12 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px s
 
 /* Contact + footer */
 .band { background: var(--band-bg); color: var(--band-ink); }
-.contact .wrap { padding-top: clamp(56px, 7vw, 104px); padding-bottom: clamp(56px, 7vw, 104px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "head info" "map compose" "avail avail"; gap: 56px 80px; align-items: stretch; }
+.contact .wrap { padding-top: clamp(56px, 7vw, 104px); padding-bottom: clamp(56px, 7vw, 104px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "head head" "map compose" "avail avail"; gap: 56px 80px; align-items: stretch; }
 .contact-head { grid-area: head; }
-.contact-side { grid-area: info; }
 .contact-avail { grid-area: avail; }
 .contact .eyebrow { margin-bottom: 24px; color: var(--band-accent); }
 .contact h2 { text-wrap: balance; font-size: clamp(26px, 3.2vw, 42px); line-height: 1.05; font-weight: 400; letter-spacing: -0.035em; }
 .contact .intro { margin-top: 28px; max-width: 460px; color: var(--band-muted); }
-.info { border-top: 1px solid var(--band-ink); }
-.info-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 24px; padding: 18px 0; border-bottom: 1px solid var(--band-line); }
-.info-row > .mono { flex: 0 0 110px; font-size: 12px; color: var(--band-accent); }
-.info-row > span:last-child { flex: 1 1 200px; min-width: 0; }
-.info-row a.u { text-decoration: underline; text-underline-offset: 4px; }
-.icons { display: flex; gap: 10px; }
-.ico { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid var(--band-line); border-radius: 4px; transition: background-color .25s, border-color .25s, transform .25s; }
-.ico:hover { background: rgba(255,255,255,.08); border-color: #abb2bf; transform: translateY(-2px); }
 .avail-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; font-size: 11px; color: var(--band-accent); }
 .tz { position: relative; margin-top: 16px; }
 .tz-hours { display: flex; justify-content: space-between; margin-left: 96px; font-size: 10px; color: var(--band-muted); }
@@ -278,7 +269,6 @@ footer p { font-size: 12px; }
   .controls .run { flex: 1 1 100%; }
   .principle h3 { flex-basis: 100%; }
   .contact .wrap { gap: 40px; }
-  .info-row > .mono { flex-basis: 80px; }
   footer .wrap { flex-direction: column; align-items: flex-start; }
 }
 
@@ -415,12 +405,13 @@ footer p { font-size: 12px; }
 .kicker .cursor { background: var(--green); }
 .keyhint kbd { color: var(--green); }
 .service .num { color: var(--green); }
-.contact .info-row > .mono:first-child, .tz-row.me > span:first-child { color: var(--band-green); }
+.tz-row.me > span:first-child { color: var(--band-green); }
 .compose { grid-area: compose; display: flex; flex-direction: column; min-width: 0; background: color-mix(in srgb, var(--band-ink) 5%, var(--band-bg)); border: 1px solid var(--band-line); border-radius: 6px; overflow: hidden; }
 .compose-bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; padding: 10px 16px; font-size: 11px; color: var(--band-muted); border-bottom: 1px solid var(--band-line); }
 .compose-row { display: flex; align-items: center; gap: 12px; padding: 0 16px; min-height: 44px; border-bottom: 1px solid var(--band-line); }
 .compose-label { flex: 0 0 64px; font-size: 11px; color: var(--band-green); }
-.compose-to { color: var(--band-ink); font-size: 14px; }
+.compose-to { color: var(--band-ink); font-size: 14px; text-decoration: none; }
+.compose-to:hover, .compose-to:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
 .compose input, .compose textarea { font: inherit; color: var(--band-ink); background: transparent; border: 0; outline: 0; }
 .compose input { flex: 1 1 auto; min-width: 0; height: 44px; padding: 0; font-size: 14px; }
 .compose textarea { display: block; flex: 1 1 auto; width: 100%; box-sizing: border-box; min-height: 120px; padding: 16px; font-size: 15px; line-height: 1.55; resize: vertical; }
@@ -438,6 +429,6 @@ footer p { font-size: 12px; }
 .aiflow-node:not(.active) .node-head > .mono { color: var(--green); }
 .aistep:not(.active) .num { color: var(--green); }
 .aistep:not(.active) .num .who { color: var(--accent); }
-@media (max-width: 900px) { .contact .wrap { grid-template-columns: 1fr; grid-template-areas: "head" "info" "map" "compose" "avail"; gap: 40px; } .map-frame { min-height: 260px; aspect-ratio: 4 / 3; flex: 0 0 auto; } }
+@media (max-width: 900px) { .contact .wrap { grid-template-columns: 1fr; grid-template-areas: "head" "map" "compose" "avail"; gap: 40px; } .map-frame { min-height: 260px; aspect-ratio: 4 / 3; flex: 0 0 auto; } }
 .compose { transition: border-color .2s; }
 .compose:focus-within { border-color: var(--band-muted); }
