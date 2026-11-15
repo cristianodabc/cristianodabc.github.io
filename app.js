@@ -252,32 +252,118 @@
   if (!dlg || typeof dlg.showModal !== 'function') return;
   const out = document.getElementById('iex-out'), input = document.getElementById('iex-in');
   const prompt = document.getElementById('iex-prompt'), form = document.getElementById('iex-form');
-  const COMMANDS = {
-    help: ['whoami   who runs this', 'services line of work', 'stack    main tools', 'approach how the work is done', 'ai       how AI is used', 'contact  how to reach me', 'clear    clear the screen', 'exit     close'],
-    whoami: ['{:ok, "Cristiano Carvalho"}', 'Independent software engineer, Ponta Grossa, Brazil (UTC-03:00).', '9+ years in backend engineering, 8+ in Elixir/OTP.'],
-    services: ['1. Software development', '2. Financial & event-driven systems', '3. Cloud & infrastructure'],
-    stack: ['[:elixir, :phoenix_liveview, :postgresql, :docker, :terraform, :google_cloud]', 'Ruby and Python too, but only where I can review the code well.'],
-    approach: ['[:simple, :reliable, :transparent, :built_to_last, :async_by_default]'],
-    ai: ['AI writes much of the code. I own every line that ships.', 'plan -> build -> verify -> my review -> gate -> ship -> learn'],
-    contact: ['carvalho.cristiano@proton.me', 'github.com/cristianodabc', 'linkedin.com/in/ccarvalho-dev']
+  const LINKS = { github: 'https://github.com/cristianodabc', linkedin: 'https://www.linkedin.com/in/ccarvalho-dev/', resume: 'assets/cristiano-carvalho-resume.pdf', email: 'mailto:carvalho.cristiano@proton.me' };
+  const SECTIONS = ['services', 'technologies', 'approach', 'ai', 'contact'];
+  const THEMES = ['auto', 'light', 'dark'];
+  const ZONES = [['Ponta Grossa', 'America/Sao_Paulo'], ['New York', 'America/New_York'], ['London', 'Europe/London'], ['Berlin', 'Europe/Berlin']];
+  const offset = (zone) => {
+    try {
+      const p = new Intl.DateTimeFormat('en-US', { timeZone: zone, timeZoneName: 'longOffset' }).formatToParts(new Date()).find((x) => x.type === 'timeZoneName');
+      const m = p && /GMT([+−-])(\d{2}):?(\d{2})?/.exec(p.value);
+      if (m) return (m[1] === '+' ? 1 : -1) * (parseInt(m[2], 10) + (m[3] ? parseInt(m[3], 10) / 60 : 0));
+    } catch (e) {}
+    return 0;
   };
-  let n = 1;
-  const add = (text, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = text; out.appendChild(d); };
+  const clock = (zone) => { try { return new Intl.DateTimeFormat('en-GB', { timeZone: zone, hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date()); } catch (e) { return '--:--'; } };
+  const overlap = (zone) => {
+    const me = offset('America/Sao_Paulo'), them = offset(zone); let n = 0;
+    for (let h = 9; h < 18; h++) { const l = (((h + (them - me)) % 24) + 24) % 24; if (l >= 9 && l < 18) n++; }
+    return n;
+  };
+  const COMMANDS = {
+    help: { d: 'list commands', run: () => Object.keys(COMMANDS).map((k) => k.padEnd(10) + COMMANDS[k].d).concat(['', 'Tab completes, up/down recalls, and Pegasustec.services() or whoami |> upcase work too.']) },
+    whoami: { d: 'who runs this', run: () => ['{:ok, "Cristiano Carvalho"}', 'Independent software engineer, Ponta Grossa, Brazil (UTC-03:00).', '9+ years in backend engineering, 8+ in Elixir/OTP.'] },
+    services: { d: 'line of work', run: () => ['1. Software development', '2. Financial & event-driven systems', '3. Cloud & infrastructure'] },
+    stack: { d: 'main tools', run: () => ['[:elixir, :phoenix_liveview, :postgresql, :docker, :terraform, :google_cloud]', 'Ruby and Python too, but only where I can review the code well.'] },
+    approach: { d: 'how the work is done', run: () => ['[:simple, :reliable, :transparent, :built_to_last, :async_by_default]'] },
+    ai: { d: 'how AI is used', run: () => ['AI writes much of the code. I own every line that ships.', 'plan -> build -> verify -> my review -> gate -> ship -> learn'] },
+    time: { d: 'local times and overlap', run: () => ZONES.map(([n, z], i) => n.padEnd(13) + clock(z) + (i ? '  ' + overlap(z) + ' h overlap with my 09-18' : '  working 09-18')) },
+    contact: { d: 'how to reach me', run: () => ['carvalho.cristiano@proton.me', 'github.com/cristianodabc', 'linkedin.com/in/ccarvalho-dev'] },
+    goto: { d: 'jump to a section', args: SECTIONS, run: ([a]) => {
+      const el = SECTIONS.includes(a) && document.getElementById(a);
+      if (!el) return ['usage: goto ' + SECTIONS.join('|')];
+      dlg.close();
+      el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    } },
+    open: { d: 'open github, linkedin, resume or email', args: Object.keys(LINKS), run: ([a]) => {
+      if (!LINKS[a]) return ['usage: open ' + Object.keys(LINKS).join('|')];
+      if (a === 'email') location.href = LINKS[a]; else window.open(LINKS[a], '_blank', 'noopener');
+      return ['opening ' + a + '...'];
+    } },
+    theme: { d: 'switch the site theme', args: THEMES, run: ([a]) => {
+      const b = THEMES.includes(a) && document.querySelector('[data-theme-set="' + a + '"]');
+      if (!b) return ['usage: theme ' + THEMES.join('|')];
+      b.click(); return ['theme set to ' + a];
+    } },
+    keys: { d: 'vim keys for the whole page', run: () => ['j / k      scroll down / up', 'd / u      half page down / up', 'gg / G     top / bottom', '} / {      next / previous section', 'h / l      previous / next step in the AI workflow', ': or `     open this terminal', '?          show these keys'] },
+    history: { d: 'commands so far', run: () => hist.map((h, i) => (i + 1) + '  ' + h) },
+    clear: { d: 'clear the screen', run: () => { banner(); } },
+    exit: { d: 'close', run: () => { dlg.close(); } }
+  };
+  const FILTERS = {
+    upcase: (l) => l.map((x) => x.toUpperCase()),
+    downcase: (l) => l.map((x) => x.toLowerCase()),
+    count: (l) => [String(l.length)],
+    reverse: (l) => l.slice().reverse(),
+    sort: (l) => l.slice().sort()
+  };
+  const hist = [];
+  let n = 1, pos = 0;
+  const add = (t, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = t; out.appendChild(d); };
   const setPrompt = () => { prompt.textContent = 'iex(' + n + ')>'; };
-  const banner = () => { out.textContent = ''; add('Pegasustec. Type help for commands.', 'dim'); };
+  const banner = () => { out.textContent = ''; add('Pegasustec. Type help for commands, or keys for the vim shortcuts.', 'dim'); };
+  const parse = (seg) => {
+    let s = seg.trim().replace(/^(?:[A-Z]\w*\.)+/, '');
+    const m = /^(\w+)\s*\((.*)\)$/.exec(s);
+    if (m) s = m[1] + ' ' + m[2].replace(/["',]/g, ' ');
+    const [name, ...args] = s.trim().split(/\s+/);
+    return [(name || '').toLowerCase(), args.map((a) => a.toLowerCase())];
+  };
+  const undef = (mod, name, arity) => add('** (UndefinedFunctionError) function ' + mod + '.' + name.slice(0, 40) + '/' + arity + ' is undefined. Try help.', 'err');
   const run = (raw) => {
-    const cmd = raw.trim().replace(/\(\)$/, '').toLowerCase();
     add('iex(' + n + ')> ' + raw, 'cmd');
     n++; setPrompt();
-    if (!cmd) return;
-    if (cmd === 'clear') { banner(); return; }
-    if (cmd === 'exit' || cmd === 'quit') { dlg.close(); return; }
-    const res = COMMANDS[cmd];
-    if (res) res.forEach((l) => add(l)); else add('** (UndefinedFunctionError) function Pegasustec.' + cmd.slice(0, 40) + '/0 is undefined. Try help.', 'err');
+    if (!raw.trim()) return;
+    const segs = raw.split('|>');
+    const [name, args] = parse(segs[0]);
+    const cmd = COMMANDS[name];
+    if (!cmd) { undef('Pegasustec', name, 0); return; }
+    let lines = cmd.run(args);
+    if (!lines) return;
+    for (const seg of segs.slice(1)) {
+      const [fname] = parse(seg);
+      if (!FILTERS[fname]) { undef('Enum', fname, 1); return; }
+      lines = FILTERS[fname](lines);
+    }
+    lines.forEach((l) => add(l));
+    out.scrollTop = out.scrollHeight;
+  };
+  const complete = () => {
+    const parts = input.value.split(/\s+/), last = parts[parts.length - 1].toLowerCase();
+    const pool = parts.length === 1 ? Object.keys(COMMANDS) : ((COMMANDS[parts[0].toLowerCase()] || {}).args || []);
+    const hits = pool.filter((k) => k.startsWith(last));
+    if (!hits.length) return;
+    if (hits.length === 1) { parts[parts.length - 1] = hits[0]; input.value = parts.join(' ') + ' '; return; }
+    add(hits.join('  '), 'dim');
+    let common = hits[0];
+    hits.forEach((h) => { while (!h.startsWith(common)) common = common.slice(0, -1); });
+    parts[parts.length - 1] = common; input.value = parts.join(' ');
     out.scrollTop = out.scrollHeight;
   };
   const open = () => { if (dlg.open) return; if (!out.childNodes.length) banner(); setPrompt(); dlg.showModal(); input.focus(); };
-  form.addEventListener('submit', (e) => { e.preventDefault(); run(input.value); input.value = ''; });
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = input.value;
+    if (v.trim() && hist[hist.length - 1] !== v) hist.push(v);
+    pos = hist.length; input.value = ''; run(v);
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowUp' && pos > 0) { e.preventDefault(); pos--; input.value = hist[pos]; }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); pos = Math.min(pos + 1, hist.length); input.value = hist[pos] || ''; }
+    else if (e.key === 'Tab') { e.preventDefault(); complete(); }
+    else if (e.key === 'l' && e.ctrlKey) { e.preventDefault(); banner(); }
+  });
+  document.addEventListener('iex-open', (e) => { open(); if (e.detail) run(e.detail); });
   document.getElementById('iex-open').addEventListener('click', open);
   document.getElementById('iex-close').addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
@@ -285,5 +371,52 @@
     if (e.key !== '`' || e.metaKey || e.ctrlKey || e.altKey) return;
     const t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
     e.preventDefault(); open();
+  });
+})();
+
+/* Vim-style keys for the whole page; ? lists them in the terminal */
+(function () {
+  const ids = ['top', 'services', 'technologies', 'approach', 'ai', 'contact'];
+  const sections = () => ids.map((id) => document.getElementById(id)).filter(Boolean);
+  const NAV = 72;
+  const startOf = (el) => el.getBoundingClientRect().top - NAV + scrollY;
+  const current = () => { const s = sections(); let k = 0; s.forEach((el, i) => { if (el.getBoundingClientRect().top <= NAV + 8) k = i; }); return k; };
+  const jump = (d) => {
+    const s = sections(), k = current();
+    let i = k + d;
+    if (d < 0 && s[k].getBoundingClientRect().top < NAV - 8) i = k;
+    i = Math.min(Math.max(i, 0), s.length - 1);
+    scrollTo({ top: i === 0 ? 0 : startOf(s[i]) + 1 });
+  };
+  const step = (d) => {
+    const ai = document.getElementById('ai'); if (!ai) return false;
+    const r = ai.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return false;
+    const nodes = Array.from(ai.querySelectorAll('.aiflow-node')), i = nodes.findIndex((n) => n.classList.contains('active'));
+    const j = Math.min(Math.max(i + d, 0), nodes.length - 1);
+    if (nodes[j]) nodes[j].click();
+    return true;
+  };
+  let pending = '', timer;
+  document.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
+    const dlg = document.getElementById('iex'); if (dlg && dlg.open) return;
+    const t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    const k = e.key;
+    if (pending === 'g') { pending = ''; clearTimeout(timer); if (k === 'g') { e.preventDefault(); scrollTo({ top: 0 }); return; } }
+    let handled = true;
+    if (k === 'j') scrollBy({ top: 90, behavior: 'instant' });
+    else if (k === 'k') scrollBy({ top: -90, behavior: 'instant' });
+    else if (k === 'd') scrollBy({ top: innerHeight / 2 });
+    else if (k === 'u') scrollBy({ top: -innerHeight / 2 });
+    else if (k === 'G') scrollTo({ top: document.documentElement.scrollHeight });
+    else if (k === '}') jump(1);
+    else if (k === '{') jump(-1);
+    else if (k === 'h') handled = step(-1);
+    else if (k === 'l') handled = step(1);
+    else if (k === ':') document.dispatchEvent(new CustomEvent('iex-open'));
+    else if (k === '?') document.dispatchEvent(new CustomEvent('iex-open', { detail: 'keys' }));
+    else if (k === 'g') { pending = 'g'; timer = setTimeout(() => { pending = ''; }, 800); }
+    else handled = false;
+    if (handled) e.preventDefault();
   });
 })();
