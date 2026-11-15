@@ -3,7 +3,7 @@
   --line: #e4e1dc; --line-strong: #1c1a1b; --btn-bg: #1c1a1b; --btn-fg: #faf9f7;
   --band-bg: #333333; --band-ink: #f4f2ee; --band-muted: #b8b5b2; --band-line: #4a4a4a;
   --band-accent: #b8b5b2; --input-line: #8f8b86; --accent: #5c5a5b; --sel-ring: #5c5a5b;
-  --tbtn-off: #5c5a5b;
+  --tbtn-off: #5c5a5b; --green: #3b7a1e; --band-green: #98c379;
   --font: 'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --gutter: clamp(20px, 5vw, 56px);
@@ -15,7 +15,7 @@
     --line: #4b5263; --line-strong: #dcdfe4; --btn-bg: #dcdfe4; --btn-fg: #282c34;
     --band-bg: #21252b; --band-ink: #dcdfe4; --band-muted: #abb2bf; --band-line: #4b5263;
     --band-accent: #abb2bf; --input-line: #7a8191; --accent: #abb2bf; --sel-ring: #dcdfe4;
-    --tbtn-off: #abb2bf;
+    --tbtn-off: #abb2bf; --green: #98c379;
     color-scheme: dark;
   }
 }
@@ -24,7 +24,7 @@
   --line: #4b5263; --line-strong: #dcdfe4; --btn-bg: #dcdfe4; --btn-fg: #282c34;
   --band-bg: #21252b; --band-ink: #dcdfe4; --band-muted: #abb2bf; --band-line: #4b5263;
   --band-accent: #abb2bf; --input-line: #7a8191; --accent: #abb2bf; --sel-ring: #dcdfe4;
-  --tbtn-off: #abb2bf;
+  --tbtn-off: #abb2bf; --green: #98c379;
   color-scheme: dark;
 }
 
@@ -155,9 +155,10 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px s
 .tz-now { position: absolute; top: 14px; bottom: -4px; width: 0; border-left: 1px dashed var(--band-ink); pointer-events: none; }
 .tz-note { margin-top: 14px; font-size: 11px; color: var(--band-muted); }
 .map { margin: 40px 0 0; max-width: 460px; }
-.map-frame { aspect-ratio: 4 / 3; border: 1px solid var(--band-line); border-radius: 4px; overflow: hidden; }
+.map-frame { position: relative; aspect-ratio: 4 / 3; border: 1px solid var(--band-line); border-radius: 4px; overflow: hidden; }
+.map-frame::after { content: ""; position: absolute; inset: 0; background: var(--band-bg); mix-blend-mode: color; pointer-events: none; }
 .map-note { margin-top: 12px; font-size: 11px; color: var(--band-muted); }
-.map iframe { display: block; width: 100%; height: calc(100% + 130px); margin-top: -130px; border: 0; filter: grayscale(1) invert(.9) contrast(.9); }
+.map iframe { display: block; width: 100%; height: calc(100% + 130px); margin-top: -130px; border: 0; filter: grayscale(1) invert(.86) brightness(.8) contrast(.9); }
 footer { border-top: 1px solid var(--band-line); }
 footer .wrap { padding-top: 20px; padding-bottom: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 32px; }
 footer .brand .mark { color: var(--band-ink); }
@@ -408,4 +409,7 @@ footer p { font-size: 12px; }
 .keyhint:hover, .keyhint:focus-visible { color: var(--ink); opacity: 1; }
 .keyhint kbd { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 5px; font: inherit; font-size: 11px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; }
 @media (max-width: 900px), (hover: none) { .keyhint { display: none; } }
-@media (max-width: 900px) { 
+.g { color: var(--green); }
+.band .g, .avail-head #tz-now-text { color: var(--band-green); }
+.kicker .cursor { background: var(--green); }
+.keyhint kbd { color: var(--green); }
