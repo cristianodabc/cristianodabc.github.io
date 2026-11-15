@@ -212,7 +212,7 @@
       nowText = String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0') + ' BRT';
     } catch (e) {}
     const work = (off, h) => { const l = (((h + (off - me)) % 24) + 24) % 24; return l >= 9 && l < 18; };
-    const zones = [['Ponta Grossa', me, true], ['New York', tzOffset('America/New_York', -5)], ['London', tzOffset('Europe/London', 0)], ['Berlin', tzOffset('Europe/Berlin', 1)]];
+    const zones = [['Ponta Grossa', me, true], ['California', tzOffset('America/Los_Angeles', -8)], ['New York', tzOffset('America/New_York', -5)], ['London', tzOffset('Europe/London', 0)], ['Berlin', tzOffset('Europe/Berlin', 1)]];
     $('tz-rows').innerHTML = zones.map(([name, off, mine]) => {
       let cells = '';
       for (let h = 0; h < 24; h++) {
@@ -257,7 +257,7 @@
   const LINKS = { github: 'https://github.com/cristianodabc', linkedin: 'https://www.linkedin.com/in/ccarvalho-dev/', resume: 'assets/cristiano-carvalho-resume.pdf', email: 'mailto:pegasustec.dev@pm.me' };
   const SECTIONS = ['services', 'technologies', 'approach', 'ai', 'contact'];
   const THEMES = ['auto', 'light', 'dark'];
-  const ZONES = [['Ponta Grossa', 'America/Sao_Paulo'], ['New York', 'America/New_York'], ['London', 'Europe/London'], ['Berlin', 'Europe/Berlin']];
+  const ZONES = [['Ponta Grossa', 'America/Sao_Paulo'], ['California', 'America/Los_Angeles'], ['New York', 'America/New_York'], ['London', 'Europe/London'], ['Berlin', 'Europe/Berlin']];
   const offset = (zone) => {
     try {
       const p = new Intl.DateTimeFormat('en-US', { timeZone: zone, timeZoneName: 'longOffset' }).formatToParts(new Date()).find((x) => x.type === 'timeZoneName');
