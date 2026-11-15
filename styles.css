@@ -453,3 +453,6 @@ footer p { font-size: 12px; }
 .iex-info { flex: 1 1 200px; min-width: 0; padding-top: 6px; }
 .iex-info .iex-title { font-weight: 700; color: var(--term-cmd); margin-bottom: 4px; }
 .iex-info .dim { color: var(--term-dim); white-space: pre; }
+.tz-tip { position: absolute; z-index: 5; transform: translate(-50%, -100%); padding: 5px 9px; font-size: 11px; white-space: nowrap; color: var(--band-bg); background: var(--band-ink); border-radius: 4px; pointer-events: none; }
+.tz-tip[hidden] { display: none; }
+.tz-cells i[data-h] { cursor: default; }

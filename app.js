@@ -216,13 +216,35 @@
       for (let h = 0; h < 24; h++) {
         const on = work(off, h);
         const cls = mine ? (on ? 'on' : '') : on ? (work(me, h) ? 'on' : 'theirs') : '';
-        cells += `<i${cls ? ` class="${cls}"` : ''}></i>`;
+        const local = (((h + (off - me)) % 24) + 24) % 24;
+        cells += `<i${cls ? ` class="${cls}"` : ''} data-h="${h}" data-n="${name}" data-l="${local}" data-k="${cls || ''}"></i>`;
       }
       return `<div class="tz-row${mine ? ' me' : ''}"><span class="mono">${name}</span><span class="tz-cells">${cells}</span></div>`;
     }).join('');
     $('tz-now').style.left = (nowH / 24 * 100).toFixed(2) + '%';
     $('tz-now-text').textContent = 'now ' + nowText;
   }
+
+  /* Hover details: what a cell's hour is in that city */
+  (function () {
+    const rows = $('tz-rows'), tip = $('tz-tip');
+    if (!rows || !tip) return;
+    const pad = (n) => String(n).padStart(2, '0');
+    const show = (cell) => {
+      const k = cell.dataset.k, name = cell.dataset.n, h = +cell.dataset.h, l = +cell.dataset.l;
+      const tag = k === 'on' ? (name === 'Ponta Grossa' ? 'working hours' : 'overlap') : k === 'theirs' ? 'their working hours' : 'off hours';
+      tip.textContent = name === 'Ponta Grossa' ? pad(h) + ':00 BRT · ' + tag : pad(h) + ':00 BRT = ' + pad(l) + ':00 in ' + name + ' · ' + tag;
+      tip.hidden = false;
+      const box = tip.parentElement.getBoundingClientRect(), c = cell.getBoundingClientRect();
+      const half = tip.offsetWidth / 2;
+      const x = Math.min(Math.max(c.left - box.left + c.width / 2, half), box.width - half);
+      tip.style.left = x + 'px';
+      tip.style.top = (c.top - box.top - 8) + 'px';
+    };
+    rows.addEventListener('pointerover', (e) => { const c = e.target.closest('i[data-h]'); if (c) show(c); });
+    rows.addEventListener('pointerleave', () => { tip.hidden = true; });
+    rows.addEventListener('click', (e) => { const c = e.target.closest('i[data-h]'); if (c) show(c); });
+  })();
 
   render();
   renderTz();
@@ -271,6 +293,29 @@
     return n;
   };
   const COMMANDS = {
+    crash: { d: 'crash a process in the Elixir demo', run: () => {
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setTimeout(() => {
+        if (!document.querySelector('.proc')) { const e = document.querySelector('.step[data-v="0"]'); if (e) e.click(); }
+        const procs = document.querySelectorAll('.proc'); if (!procs.length) return;
+        dlg.close();
+        const target = procs[Math.floor(Math.random() * procs.length)];
+        target.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
+        setTimeout(() => target.click(), reduce ? 50 : 700);
+      }, 500);
+      return ['** (EXIT) killing a random process...', 'Its supervisor restarts it. Watch the Technologies section.'];
+    } },
+    sudo: { d: 'try it', run: (args) => {
+      if (args.join(' ') !== 'hire me') return ['visitor is not in the sudoers file. This incident will be reported.', 'Try: sudo hire me'];
+      setTimeout(() => {
+        dlg.close();
+        const box = document.getElementById('c-body'), form = document.getElementById('compose');
+        if (form) form.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+        if (box) box.focus({ preventScroll: true });
+      }, 900);
+      return ['[sudo] password for visitor: ********', 'Access granted. Opening the composer...'];
+    } },
+    fortune: { d: 'a principle, at random', run: () => [FORTUNES[Math.floor(Math.random() * FORTUNES.length)]] },
     logo: { d: 'show the logo', run: () => { out.appendChild(logoNode()); out.scrollTop = out.scrollHeight; } },
     help: { d: 'list commands', run: () => Object.keys(COMMANDS).map((k) => k.padEnd(10) + COMMANDS[k].d).concat(['', 'Tab completes, up/down recalls, and Pegasustec.services() or whoami |> upcase work too.']) },
     whoami: { d: 'who runs this', run: () => ['{:ok, "Cristiano Carvalho"}', 'Independent software engineer, Ponta Grossa, Brazil (UTC-03:00).', '9+ years in backend engineering, 8+ in Elixir/OTP.'] },
@@ -310,6 +355,7 @@
   };
   const LOGO = ["       ..                             .-", "      .:%#:                          =@-", "       %@@@%#+-.                  :+@@#", "      +@@@@@@@@@#=             .=#@@@#.", "    .#@@@@@@@@@@@@%-        -+%@@@@@*", "   =@@@@@@@@@@@@@@@@*   :=#@@@@@@@#-", "  *@@@@@@@@@#@@@@@@%#+*%@@@@@@@@*-.", ".%@@@@#+++=.*@@@%+*#@@@@@@@@@#=-+#@.", ":#%%%-     -@@#+*@@@@@@@@%*==*%@@@+", "          =@@+#@@@@@@@#++*%@@@@@@+", "        .*@%=%@@@@@#**%@@@@@@@@*.", "       .%@@=@@@@@@#%@@@@@@@%+-::", "       #@@%%@@@@@@@@@@@#+++*#@@-", "      .@@@@@@@@@@@@@#**#@@@@@*:", "       @@@@@@@@@@@@%@@@@@#+-", "       +@@@@@@@@@@@@@#+++*%#", "        *@@@@@@@@@@%#%@@@%=", "         +@@@@@@@@@@@%#+:", "          -%@@@@@@@=.", "           +@@@@@@%", "          +********+.", "       -#%%%%%%%%%%%%%#:", "       :+*************+.", "       +%%%%%%%%%%%%%%%=", "      #@@@@@@@@@@@@@@@@@*", "     +@@@@@@@@@@@@@@@@@@@-"];
   const INFO = ['pegasustec.dev', 'Independent software and infrastructure engineering, built on Elixir.', '', 'help   list commands', 'keys   vim keys for the page'];
+  const FORTUNES = ['Anything not needed is removed. Fewer moving parts means fewer things that can break.', 'Tested, monitored and documented, so your systems keep working when it matters.', 'Clear scope, honest timelines and regular updates from first call to launch.', 'Foundations designed to grow with your business instead of being rebuilt every year.', 'AI writes much of the code. I own every line that ships.', 'Time zones matter mostly for meetings. The work can be done from anywhere.'];
   const hist = [];
   let n = 1, pos = 0;
   const add = (t, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = t; out.appendChild(d); };
