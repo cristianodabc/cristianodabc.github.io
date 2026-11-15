@@ -392,8 +392,6 @@ footer p { font-size: 12px; }
 .aiflow-foot .legend { display: inline-flex; align-items: center; gap: 5px; }
 .aiflow-foot .legend .sep { width: 10px; }
 
-.iex-open { margin-left: auto; padding: 4px 8px; font-size: 12px; color: var(--band-muted); background: none; border: 1px solid var(--band-line); border-radius: 4px; cursor: pointer; }
-.iex-open:hover, .iex-open:focus-visible { color: var(--band-ink); border-color: var(--band-muted); }
 .iex { width: min(680px, 92vw); max-height: min(460px, 80vh); padding: 0; border: 1px solid var(--band-muted); border-radius: 6px; background: #1d1f23; color: #dcdfe4; box-shadow: 0 24px 60px rgba(0,0,0,.5); }
 .iex[open] { display: flex; flex-direction: column; }
 .iex::backdrop { background: rgba(0,0,0,.55); }

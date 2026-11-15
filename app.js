@@ -366,7 +366,6 @@
     else if (e.key === 'l' && e.ctrlKey) { e.preventDefault(); banner(); }
   });
   document.addEventListener('iex-open', (e) => { open(); if (e.detail) run(e.detail); });
-  document.getElementById('iex-open').addEventListener('click', open);
   document.getElementById('iex-close').addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
   document.addEventListener('keydown', (e) => {
