@@ -228,3 +228,20 @@
   renderTz();
   setInterval(renderTz, 60000);
 })();
+
+/* AI workflow: highlight the selected step (My review by default) */
+(function () {
+  const section = document.getElementById('ai');
+  if (!section) return;
+  const nodes = section.querySelectorAll('.aiflow-node');
+  const cards = section.querySelectorAll('.aistep');
+  const select = (i) => {
+    nodes.forEach((n) => { const on = n.dataset.step === i; n.classList.toggle('active', on); n.setAttribute('aria-pressed', String(on)); });
+    cards.forEach((c) => c.classList.toggle('active', c.dataset.step === i));
+  };
+  section.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
+    const el = e.target.closest('[data-step]');
+    if (el) select(el.dataset.step);
+  });
+})();
