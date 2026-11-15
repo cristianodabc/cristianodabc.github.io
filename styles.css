@@ -1,9 +1,9 @@
 :root {
-  --bg: #faf9f7; --bg-glass: rgba(250,249,247,.82); --ink: #1c1a1b; --muted: #5c5a5b;
-  --line: #e4e1dc; --line-strong: #1c1a1b; --btn-bg: #1c1a1b; --btn-fg: #faf9f7;
-  --band-bg: #0b0b0b; --band-ink: #f4f2ee; --band-muted: #b8b5b2; --band-line: #4a4a4a;
+  --bg: #faf9f7; --bg-glass: rgba(250,249,247,.82); --ink: #2a2b2f; --muted: #5c5a5b;
+  --line: #e4e1dc; --line-strong: #2a2b2f; --btn-bg: #2a2b2f; --btn-fg: #faf9f7;
+  --band-bg: #1e1e21; --band-ink: #f4f2ee; --band-muted: #b8b5b2; --band-line: #4a4a4a;
   --band-accent: #b8b5b2; --input-line: #8f8b86; --accent: #5c5a5b; --sel-ring: #5c5a5b;
-  --tbtn-off: #5c5a5b; --green: var(--accent); --band-green: var(--band-accent); --on: var(--ink); --band-on: var(--band-ink); --term-bg: #ffffff; --term-ink: #1c1a1b; --term-dim: #5c5a5b; --term-line: #e4e1dc; --term-border: #8f8b86; --term-cmd: #1c1a1b; --term-err: #b4232c; --term-shadow: rgba(0,0,0,.18); --term-back: rgba(0,0,0,.35);
+  --tbtn-off: #5c5a5b; --green: var(--accent); --band-green: var(--band-accent); --mark: color-mix(in srgb, var(--ink) 86%, var(--bg)); --on: var(--ink); --band-on: var(--band-ink); --term-bg: #ffffff; --term-ink: #2a2b2f;  --term-dim: #5c5a5b; --term-line: #e4e1dc; --term-border: #8f8b86; --term-cmd: #1c1a1b; --term-err: #b4232c; --term-shadow: rgba(0,0,0,.18); --term-back: rgba(0,0,0,.35);
   --font: 'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --gutter: clamp(20px, 5vw, 56px);
@@ -15,7 +15,7 @@
     --line: #4b5263; --line-strong: #dcdfe4; --btn-bg: #dcdfe4; --btn-fg: #282c34;
     --band-bg: #21252b; --band-ink: #dcdfe4; --band-muted: #abb2bf; --band-line: #4b5263;
     --band-accent: #abb2bf; --input-line: #7a8191; --accent: #abb2bf; --sel-ring: #dcdfe4;
-    --tbtn-off: #abb2bf; --green: #98c379; --band-green: #98c379; --on: #98c379; --band-on: #98c379; --term-bg: #1d1f23; --term-ink: #dcdfe4; --term-dim: #abb2bf; --term-line: #3a3f4b; --term-border: #abb2bf; --term-cmd: #98c379; --term-err: #e06c75; --term-shadow: rgba(0,0,0,.5); --term-back: rgba(0,0,0,.55);
+    --tbtn-off: #abb2bf; --green: #98c379; --band-green: #98c379; --mark: var(--ink); --on: #98c379; --band-on: #98c379; --term-bg: #1d1f23; --term-ink: #dcdfe4; --term-dim: #abb2bf; --term-line: #3a3f4b; --term-border: #abb2bf; --term-cmd: #98c379; --term-err: #e06c75; --term-shadow: rgba(0,0,0,.5); --term-back: rgba(0,0,0,.55);
     color-scheme: dark;
   }
 }
@@ -24,7 +24,7 @@
   --line: #4b5263; --line-strong: #dcdfe4; --btn-bg: #dcdfe4; --btn-fg: #282c34;
   --band-bg: #21252b; --band-ink: #dcdfe4; --band-muted: #abb2bf; --band-line: #4b5263;
   --band-accent: #abb2bf; --input-line: #7a8191; --accent: #abb2bf; --sel-ring: #dcdfe4;
-  --tbtn-off: #abb2bf; --green: #98c379; --band-green: #98c379; --on: #98c379; --band-on: #98c379; --term-bg: #1d1f23; --term-ink: #dcdfe4; --term-dim: #abb2bf; --term-line: #3a3f4b; --term-border: #abb2bf; --term-cmd: #98c379; --term-err: #e06c75; --term-shadow: rgba(0,0,0,.5); --term-back: rgba(0,0,0,.55);
+  --tbtn-off: #abb2bf; --green: #98c379; --band-green: #98c379; --mark: var(--ink); --on: #98c379; --band-on: #98c379; --term-bg: #1d1f23; --term-ink: #dcdfe4; --term-dim: #abb2bf; --term-line: #3a3f4b; --term-border: #abb2bf; --term-cmd: #98c379; --term-err: #e06c75; --term-shadow: rgba(0,0,0,.5); --term-back: rgba(0,0,0,.55);
   color-scheme: dark;
 }
 
@@ -63,7 +63,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px s
 .nav { position: sticky; top: 0; z-index: 20; background: var(--bg-glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
 .nav header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding-top: 8px; padding-bottom: 8px; }
 .brand { display: flex; align-items: center; gap: 14px; }
-.brand .mark { height: 32px; width: auto; aspect-ratio: 192.59 / 229.10; display: block; color: var(--ink); }
+.brand .mark { height: 32px; width: auto; aspect-ratio: 192.59 / 229.10; display: block; color: var(--mark); }
 .wordmark { display: flex; flex-direction: column; line-height: 1; }
 .wordmark b { font-size: 13px; font-weight: 500; letter-spacing: .3em; }
 .wordmark small { font-size: 9px; font-weight: 400; letter-spacing: .5em; margin-top: 5px; color: var(--muted); }
@@ -309,7 +309,7 @@ footer p { font-size: 12px; }
 }
 .marquee-track img { display: block; width: 112px; height: 35px; object-fit: contain; filter: var(--logo-filter); opacity: .6; transition: opacity .25s; }
 .marquee-track li:hover img { opacity: .9; }
-:root { --logo-filter: grayscale(1) brightness(0); }
+:root { --logo-filter: grayscale(1) brightness(0) invert(.17); }
 :root[data-theme="dark"] { --logo-filter: grayscale(1) brightness(0) invert(1); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --logo-filter: grayscale(1) brightness(0) invert(1); } }
 .marquee-track a { display: block; padding: 4px 0; border-radius: 3px; }
