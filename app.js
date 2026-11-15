@@ -254,7 +254,7 @@
   if (!dlg || typeof dlg.showModal !== 'function') return;
   const out = document.getElementById('iex-out'), input = document.getElementById('iex-in');
   const prompt = document.getElementById('iex-prompt'), form = document.getElementById('iex-form');
-  const LINKS = { github: 'https://github.com/cristianodabc', linkedin: 'https://www.linkedin.com/in/ccarvalho-dev/', resume: 'assets/cristiano-carvalho-resume.pdf', email: 'mailto:carvalho.cristiano@proton.me' };
+  const LINKS = { github: 'https://github.com/cristianodabc', linkedin: 'https://www.linkedin.com/in/ccarvalho-dev/', resume: 'assets/cristiano-carvalho-resume.pdf', email: 'mailto:pegasustec.dev@pm.me' };
   const SECTIONS = ['services', 'technologies', 'approach', 'ai', 'contact'];
   const THEMES = ['auto', 'light', 'dark'];
   const ZONES = [['Ponta Grossa', 'America/Sao_Paulo'], ['New York', 'America/New_York'], ['London', 'Europe/London'], ['Berlin', 'Europe/Berlin']];
@@ -280,7 +280,7 @@
     approach: { d: 'how the work is done', run: () => ['[:simple, :reliable, :transparent, :built_to_last, :async_by_default]'] },
     ai: { d: 'how AI is used', run: () => ['AI writes much of the code. I own every line that ships.', 'plan -> build -> verify -> my review -> gate -> ship -> learn'] },
     time: { d: 'local times and overlap', run: () => ZONES.map(([n, z], i) => n.padEnd(13) + clock(z) + (i ? '  ' + overlap(z) + ' h overlap with my 09-18' : '  working 09-18')) },
-    contact: { d: 'how to reach me', run: () => ['carvalho.cristiano@proton.me', 'github.com/cristianodabc', 'linkedin.com/in/ccarvalho-dev'] },
+    contact: { d: 'how to reach me', run: () => ['pegasustec.dev@pm.me', 'github.com/cristianodabc', 'linkedin.com/in/ccarvalho-dev'] },
     goto: { d: 'jump to a section', args: SECTIONS, run: ([a]) => {
       const el = SECTIONS.includes(a) && document.getElementById(a);
       if (!el) return ['usage: goto ' + SECTIONS.join('|')];

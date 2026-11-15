@@ -12,12 +12,12 @@ Pegasustec is the independent, B2B consultancy of Cristiano Carvalho, based in P
 
 ## How the work is done
 
-- [Approach](https://pegasustec.dev/#approach): simple, reliable, transparent, built to last, and asynchronous by default across time zones, with overlap hours for live calls.
+- [Approach](https://pegasustec.dev/#approach): simple, reliable, transparent, built to last, and asynchronous by default: work can be done from anywhere, and hours are flexible for live calls.
 - [How AI is used](https://pegasustec.dev/#ai): agents write much of the code and the human owns every line that ships. Plan, build, verify, human review, automated gate, ship, learn.
 
 ## Contact
 
-- Email: carvalho.cristiano@proton.me
+- Email: pegasustec.dev@pm.me
 - [GitHub](https://github.com/cristianodabc)
 - [LinkedIn](https://www.linkedin.com/in/ccarvalho-dev/)
 - [Resume (PDF)](https://pegasustec.dev/assets/cristiano-carvalho-resume.pdf)
