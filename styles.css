@@ -406,3 +406,7 @@ footer p { font-size: 12px; }
 .iex-line { display: flex; gap: 8px; align-items: center; padding: 10px 12px; border-top: 1px solid #3a3f4b; font-size: 13px; }
 .iex-line label { color: #98c379; white-space: nowrap; }
 .iex-line input { flex: 1 1 auto; min-width: 0; font: inherit; color: inherit; background: none; border: 0; outline: 0; caret-color: #dcdfe4; }
+.keyhint { display: inline-flex; align-items: center; gap: 6px; padding: 0; font: inherit; color: var(--muted); background: none; border: 0; cursor: pointer; opacity: .8; }
+.keyhint:hover, .keyhint:focus-visible { color: var(--ink); opacity: 1; }
+.keyhint kbd { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 5px; font: inherit; font-size: 11px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; }
+@media (max-width: 900px), (hover: none) { .keyhint { display: none; } }

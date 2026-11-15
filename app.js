@@ -398,6 +398,8 @@
     if (nodes[j]) nodes[j].click();
     return true;
   };
+  const hint = document.getElementById('keyhint');
+  if (hint) hint.addEventListener('click', () => document.dispatchEvent(new CustomEvent('iex-open', { detail: 'keys' })));
   let pending = '', timer;
   document.addEventListener('keydown', (e) => {
     if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
