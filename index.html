@@ -185,6 +185,19 @@
           <p class="tz-note mono">Top row is me, 09–18. Bright = overlap with my hours. Dim = their 09–18.</p>
         </div>
       </div>
+      <form class="compose" id="compose" novalidate aria-label="Write an email">
+        <div class="compose-bar mono"><span><span class="g">$</span> new message</span><span class="compose-note">nothing is sent from this page; it opens your mail app</span></div>
+        <div class="compose-row"><span class="compose-label mono">To</span><span class="compose-to">pegasustec.dev@pm.me</span></div>
+        <div class="compose-row"><label class="compose-label mono" for="c-subject">Subject</label><input id="c-subject" name="subject" type="text" value="Project inquiry" maxlength="120" autocomplete="off"></div>
+        <div class="compose-row"><label class="compose-label mono" for="c-name">Name</label><input id="c-name" name="name" type="text" placeholder="Optional" maxlength="80" autocomplete="name"></div>
+        <label class="sr-only" for="c-body">Message</label>
+        <textarea id="c-body" name="body" rows="8" maxlength="1500" placeholder="What are you building? Add the stack, the timeline and anything else that helps."></textarea>
+        <div class="compose-foot">
+          <button type="submit" class="compose-send">Open in mail app</button>
+          <button type="button" class="compose-copy" id="c-copy">Copy message</button>
+          <span class="compose-status mono" id="c-status" role="status" aria-live="polite"></span>
+        </div>
+      </form>
     </div>
   </section>
 

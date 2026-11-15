@@ -423,3 +423,34 @@
     if (handled) e.preventDefault();
   });
 })();
+
+/* Contact composer: builds a mailto: link, nothing is sent from the page */
+(function () {
+  const form = document.getElementById('compose');
+  if (!form) return;
+  const TO = 'pegasustec.dev@pm.me', MAX_URL = 1900;
+  const subject = document.getElementById('c-subject'), name = document.getElementById('c-name');
+  const body = document.getElementById('c-body'), status = document.getElementById('c-status');
+  const text = () => {
+    const msg = body.value.trim();
+    const who = name.value.trim();
+    return msg + (who ? '\n\n' + who : '');
+  };
+  const say = (t, err) => { status.textContent = t; status.classList.toggle('err', !!err); };
+  const url = () => 'mailto:' + TO + '?subject=' + encodeURIComponent(subject.value.trim() || 'Project inquiry') + '&body=' + encodeURIComponent(text().replace(/\r?\n/g, '\r\n'));
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!body.value.trim()) { say('Write a message first.', true); body.focus(); return; }
+    const href = url();
+    if (href.length > MAX_URL) { say('Too long for a mail link. Use Copy message and paste it into your mail app.', true); return; }
+    const a = document.createElement('a'); a.href = href; document.body.appendChild(a); a.click(); a.remove();
+    say('Opening your mail app. If nothing opens, use Copy message.');
+  });
+  document.getElementById('c-copy').addEventListener('click', async () => {
+    if (!body.value.trim()) { say('Write a message first.', true); body.focus(); return; }
+    const out = 'To: ' + TO + '\nSubject: ' + (subject.value.trim() || 'Project inquiry') + '\n\n' + text();
+    try { await navigator.clipboard.writeText(out); say('Copied. Paste it into any mail app and send it to ' + TO + '.'); }
+    catch (e) { say('Could not copy. Select the message and copy it by hand.', true); }
+  });
+  body.addEventListener('keydown', (e) => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') form.requestSubmit(); });
+})();

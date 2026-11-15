@@ -415,3 +415,21 @@ footer p { font-size: 12px; }
 .keyhint kbd { color: var(--green); }
 .service .num { color: var(--green); }
 .contact .info-row > .mono:first-child, .tz-row.me > span:first-child { color: var(--band-green); }
+.compose { flex: 1 1 100%; margin-top: 8px; background: color-mix(in srgb, var(--band-ink) 5%, var(--band-bg)); border: 1px solid var(--band-line); border-radius: 6px; overflow: hidden; }
+.compose-bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; padding: 10px 16px; font-size: 11px; color: var(--band-muted); border-bottom: 1px solid var(--band-line); }
+.compose-row { display: flex; align-items: center; gap: 12px; padding: 0 16px; min-height: 44px; border-bottom: 1px solid var(--band-line); }
+.compose-label { flex: 0 0 64px; font-size: 11px; color: var(--band-green); }
+.compose-to { color: var(--band-ink); font-size: 14px; }
+.compose input, .compose textarea { font: inherit; color: var(--band-ink); background: transparent; border: 0; outline: 0; }
+.compose input { flex: 1 1 auto; min-width: 0; height: 44px; padding: 0; font-size: 14px; }
+.compose textarea { display: block; width: 100%; box-sizing: border-box; min-height: 180px; padding: 16px; font-size: 15px; line-height: 1.55; resize: vertical; }
+.compose input::placeholder, .compose textarea::placeholder { color: var(--band-muted); opacity: .8; }
+.compose input:focus-visible, .compose textarea:focus-visible { outline: 2px solid var(--band-green); outline-offset: -2px; }
+.compose-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--band-line); }
+.compose-send, .compose-copy { font: inherit; font-size: 13px; font-weight: 500; min-height: 40px; padding: 0 16px; border-radius: 4px; cursor: pointer; }
+.compose-send { color: var(--band-bg); background: var(--band-ink); border: 1px solid var(--band-ink); }
+.compose-copy { color: var(--band-ink); background: transparent; border: 1px solid var(--band-line); }
+.compose-send:hover, .compose-copy:hover { opacity: .85; }
+.compose-send:focus-visible, .compose-copy:focus-visible { outline: 2px solid var(--band-green); outline-offset: 2px; }
+.compose-status { flex: 1 1 200px; font-size: 11px; color: var(--band-muted); }
+.compose-status.err { color: #e06c75; }
