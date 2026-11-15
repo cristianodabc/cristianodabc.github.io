@@ -127,7 +127,9 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px s
 
 /* Contact + footer */
 .band { background: var(--band-bg); color: var(--band-ink); }
-.contact .wrap { padding-top: clamp(56px, 7vw, 104px); padding-bottom: clamp(56px, 7vw, 104px); display: flex; flex-wrap: wrap; gap: 56px 80px; align-items: flex-start; }
+.contact .wrap { padding-top: clamp(56px, 7vw, 104px); padding-bottom: clamp(56px, 7vw, 104px); display: flex; flex-wrap: wrap; gap: 56px 80px; align-items: stretch; }
+.contact-side { display: flex; flex-direction: column; }
+.contact-avail { margin-top: auto; }
 .contact .eyebrow { margin-bottom: 24px; color: var(--band-accent); }
 .contact h2 { font-size: clamp(26px, 3.2vw, 42px); line-height: 1.05; font-weight: 400; letter-spacing: -0.035em; }
 .contact .intro { margin-top: 28px; max-width: 460px; color: var(--band-muted); }
