@@ -1,7 +1,7 @@
 :root {
   --bg: #faf9f7; --bg-glass: rgba(250,249,247,.82); --ink: #1c1a1b; --muted: #5c5a5b;
   --line: #e4e1dc; --line-strong: #1c1a1b; --btn-bg: #1c1a1b; --btn-fg: #faf9f7;
-  --band-bg: #333333; --band-ink: #f4f2ee; --band-muted: #b8b5b2; --band-line: #4a4a4a;
+  --band-bg: #0b0b0b; --band-ink: #f4f2ee; --band-muted: #b8b5b2; --band-line: #4a4a4a;
   --band-accent: #b8b5b2; --input-line: #8f8b86; --accent: #5c5a5b; --sel-ring: #5c5a5b;
   --tbtn-off: #5c5a5b; --green: #3b7a1e; --band-green: #98c379;
   --font: 'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;

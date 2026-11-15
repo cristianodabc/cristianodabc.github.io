@@ -11,9 +11,7 @@
     themeBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.themeSet === mode)));
     if (save) { try { localStorage.setItem('theme', mode); } catch (e) {} }
   };
-  let stored = null;
-  try { stored = localStorage.getItem('theme'); } catch (e) {}
-  applyTheme(stored === 'auto' ? 'auto' : root.dataset.theme || 'dark', false);
+  applyTheme(root.dataset.theme || 'auto', false);
   themeBtns.forEach((b) => b.addEventListener('click', () => applyTheme(b.dataset.themeSet, true)));
 
   /* Mobile menu */
